@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      body { font-family: 'Lato', sans-serif; }
+      h1, h2, h3 {
+        font-family: 'Alegreya', serif;
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Inconsolata', monospace; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Kubernetes
+
+![Logo](k8s.png)
+
+Starting with Kubernetes 1.2, with sane and accurate local development
+
+---
+
+# Intro
+
+- Who am I?
+
+- What do I do?
+
+- What do I really know?
+
+  Nothing??
+
+---
+
+# What this talk is
+
+- What is Docker?
+- What is Kubernetes?
+  - An overview
+  - A deployment and a service!
+  - A new deployment? :O
+  - How we got to Kubernetes 1.2. The TL;DR
+  - Cool "resources" I'm gonna pretty much ignore
+- Kubernetes local development
+- Kubernetes demo!
+- War stories
+- Questions
+
+# What it isn't?
+
+- (helios|swarmkit|mesos/marathon|ecs) sucks
+
+---
+
+# What is Docker?
+* docker vs VMs vs bare metal
+
+---
+
+# What is Kubernetes?
+
+image13.diagram
+
+---
+
+# Cloud Native Computing Foundation
+
+## About
+The mission of the CNCF is to create and drive the adoption of a new computing paradigm that is optimized for modern distributed systems environments capable of scaling to tens of thousands of self healing multi-tenant nodes. You can read more in depth about our mission, structure and values in our charter: https://cncf.io/about/charter
+
+## Projects in their incubator so far
+
+- Kubernetes
+- Prometheus
+
+---
+
+# Things built on Kubernetes
+
+* OpenShift by RedHat
+* Gondor/Kel by Eldarion
+* Deis workflow
+* fabric8
+
+---
+
+# Getting started
+
+kubectl run python-api --image=python-server:1
+kubectl expose python-api --type=LoadBalancer
+
+---
+
+# Deploying a change
+
+---
+
+# How we got to Kubernetes 1.2
+
+* replication controllers + services
+* deployments + services
+* deployments + services + secrets + configmaps + persisten volumes
+
+---
+
+# Resources I'm basically gonna ignore
+
+* configmaps
+* daemonsets (aka 'ds')
+* horizontalpodautoscalers (aka 'hpa')
+* ingress (aka 'ing')
+* jobs
+* limitranges (aka 'limits')
+* persistentvolumes (aka 'pv')
+* persistentvolumeclaims (aka 'pvc')
+* secrets
+* serviceaccounts
+
+---
+
+# Kubernetes local development
+
+## docker-compose
+
+## monokube + localkube
+
+---
+
+# Quick start
+* Creating your first deployment and service
+* Doing a rolling update
+* Persistent storage
+
+---
+
+# War stories
+* memcached
+* kafka
+* kafka
+* gunicorn
+
+---
+
+## Questions?
+
+## Thanks
+
+## Links
+
+    </textarea>
+    <script src="/presentations/bower_components/remark/out/remark.min.js">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+    <script>
+      WebFont.load({
+        google: {
+          families: ['Alegreya', 'Lato', 'Inconsolata']
+        }
+      });
+
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
