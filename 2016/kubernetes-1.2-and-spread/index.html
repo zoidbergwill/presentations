@@ -10,6 +10,25 @@
         font-weight: normal;
       }
       .remark-code, .remark-inline-code { font-family: 'Inconsolata', monospace; }
+
+      @page {
+        size: 1210px 681px;
+        margin: 0;
+      }
+
+      @media print {
+        .remark-slide-scaler {
+          width: 100% !important;
+          height: 100% !important;
+          transform: scale(1) !important;
+          top: 0 !important;
+          left: 0 !important;
+        }
+      }
+
+      .snug_image {
+        width: 100%;
+      }
     </style>
   </head>
   <body>
@@ -19,9 +38,15 @@ class: center, middle
 
 # Kubernetes
 
+Starting with Version 1.2
+
 ![Logo](k8s.png)
 
-Starting with Kubernetes 1.2, with sane and accurate local development
+
+.right[
+William Stewart]
+.right[
+@zoidbergwill]
 
 ---
 
@@ -31,68 +56,190 @@ Starting with Kubernetes 1.2, with sane and accurate local development
 
 - What do I do?
 
-- What do I really know?
-
-  Nothing??
-
 ---
 
-# What this talk is
+# Overview
 
 - What is Docker?
 - What is Kubernetes?
-  - An overview
-  - A deployment and a service!
-  - A new deployment? :O
-  - How we got to Kubernetes 1.2. The TL;DR
-  - Cool "resources" I'm gonna pretty much ignore
+  - An overview of Kubernetes
+  - Running a simple app
+  - Updating it
+  - How we got to version 1.2. The TL;DR
+  - Cool "resources" I'm gonna have to skip over for now
 - Kubernetes local development
+  - Docker-compose
+  - hyperkube / kubernetes-anywhere
+  - localkube / minikube
 - Kubernetes demo!
 - War stories
+  - Memcached
+  - Kafka (Persistent storage, consistent broker IDs, etc. etc.)
+  - Migrations
 - Questions
 
-# What it isn't?
+---
 
-- (helios|swarmkit|mesos/marathon|ecs) sucks
+# What this talk isn't
+
+- A comparison of Kubernetes vs. (helios|swarmkit|mesos/marathon|ecs)
+- An advanced / in-depth look at Kubernetes
 
 ---
 
 # What is Docker?
-* docker vs VMs vs bare metal
+
+Docker is a simple standard way of building applications into containers, which means we can build and test the same Docker containers that we are running in production.
+
+Containers are a lighter and more portable version of virtualisation compared to virtual machines.
+
+.center[
+![Docker](what-is-docker-diagram.png) ![VM](what-is-vm-diagram.png)]
 
 ---
 
-# What is Kubernetes?
+# Running Docker in production
 
-image13.diagram
+.center[
+![Docker in production](docker-production.jpg)]
 
----
+<!-- ---
 
-# Cloud Native Computing Foundation
+## Cloud Native Computing Foundation
 
-## About
+### About
 The mission of the CNCF is to create and drive the adoption of a new computing paradigm that is optimized for modern distributed systems environments capable of scaling to tens of thousands of self healing multi-tenant nodes. You can read more in depth about our mission, structure and values in our charter: https://cncf.io/about/charter
 
-## Projects in their incubator so far
+### Projects in their incubator so far
 
 - Kubernetes
-- Prometheus
+- Prometheus -->
 
----
+<!-- ---
 
 # Things built on Kubernetes
 
 * OpenShift by RedHat
 * Gondor/Kel by Eldarion
 * Deis workflow
-* fabric8
+* fabric8 -->
+
+---
+
+# What is Kubernetes?
+
+![Cluster overview](image_13.png)
+
+---
+
+# Base Kubernetes resources
+
+## Nodes
+
+The machines that can have pods scheduled on them
+
+## Pods
+
+The base resource that is scheduled
+
+## Services
+
+The way we expose resources for other things to talk to them
+
+---
+
+# Scheduling pods
+
+## Deployments
+
+These technically create replica sets but I'll get into that.
+
+## DaemonSets
+
+These are for making sure a certain pod runs on every node.
+
+## Job
+
+There are for once off pods.
+
+---
+
+# More about resources
+
+```
+apiVersion:
+kind:
+metadata:
+spec:
+status:
+```
+
+---
+
+# More about Pods
+
+`kubectl explain pod.spec --recursive`
+
+```
+...
+
+Specification of the desired behavior of the pod.
+
+...
+
+FIELDS:
+   ...
+   volumes  <[]Object>
+       cinder <Object>
+       configMap  <Object>
+       downwardAPI  <Object>
+       flocker  <Object>
+       iscsi  <Object>
+       nfs  <Object>
+       azureFile  <Object>
+       emptyDir <Object>
+       flexVolume <Object>
+       name <string>
+       awsElasticBlockStore <Object>
+       cephfs <Object>
+       gitRepo  <Object>
+       glusterfs  <Object>
+       fc <Object>
+       gcePersistentDisk  <Object>
+       hostPath <Object>
+       persistentVolumeClaim  <Object>
+       rbd  <Object>
+       secret <Object>
+   restartPolicy  <string>
+   containers <[]Object> -required-
+       imagePullPolicy  <string>
+       name <string>
+       readinessProbe <Object>
+       resources  <Object>
+       terminationMessagePath <string>
+       workingDir <string>
+       command  <[]string>
+       image  <string>
+       ports  <[]Object>
+       stdinOnce  <boolean>
+       tty  <boolean>
+       volumeMounts <[]Object>
+       env  <[]Object>
+       lifecycle  <Object>
+       securityContext  <Object>
+       stdin  <boolean>
+       args <[]string>
+       livenessProbe  <Object>
+   terminationGracePeriodSeconds  <integer>
+```
 
 ---
 
 # Getting started
 
-kubectl run python-api --image=python-server:1
-kubectl expose python-api --type=LoadBalancer
+kubectl run web --image=web:1
+
+kubectl expose web --type=LoadBalancer
 
 ---
 
@@ -163,7 +310,14 @@ kubectl expose python-api --type=LoadBalancer
         }
       });
 
-      var slideshow = remark.create();
+      var slideshow = remark.create(
+        {
+          ratio: '4:3',
+          // slideNumberFormat: 'Slide %current% / %total%',
+          highlightStyle: 'monokai',
+          highlightLines: true
+        }
+      );
     </script>
   </body>
 </html>
