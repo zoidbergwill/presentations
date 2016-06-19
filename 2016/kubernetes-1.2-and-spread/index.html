@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Title</title>
+    <title>Kubernetes</title>
     <meta charset="utf-8">
     <style>
       body { font-family: 'Lato', sans-serif; }
       h1, h2, h3 {
         font-family: 'Alegreya', serif;
         font-weight: normal;
+        -webkit-margin-before: 0em;
+        -webkit-margin-after: 0em;
       }
       .remark-code, .remark-inline-code { font-family: 'Inconsolata', monospace; }
 
@@ -82,8 +84,17 @@ William Stewart]
 
 # What this talk isn't
 
-- A comparison of Kubernetes vs. (helios|swarmkit|mesos/marathon|ecs)
 - An advanced / in-depth look at Kubernetes
+
+  (Unfortunately we don't have the time)
+
+  Hopefully this will be a decent foundation
+
+- A comparison of Kubernetes vs:
+  - Mesos/Marathon
+  - ECS
+  - Helios
+  - Swarmkit
 
 ---
 
@@ -126,120 +137,155 @@ The mission of the CNCF is to create and drive the adoption of a new computing p
 
 ---
 
-# What is Kubernetes?
+class: center, middle
+
+# Container cluster managers
+# can help
+
+---
+
+# Automate the boring stuff
+
+- “Automation is a force multiplier, not a panacea”
+- Value of automation
+  - Consistency
+  - Extensibility
+  - MTTR (Mean Time To Repair)
+  - Faster non-repair actions
+  - Time savings
+
+.bottom[
+[Dan Luu's Notes on Google's Site Reliability Engineering book](danluu.com/google-sre-book/)]
+
+---
+
+# Enter Kubernetes
 
 ![Cluster overview](image_13.png)
 
 ---
 
+# How does it help?
+
+- Container hosting
+- Config changes
+- Supervision
+- Monitoring
+- Rolling deployments
+- Networking
+
+---
+
+# Let's set up a basic environment
+
+```
+$ hub clone --depth 1 zoidbergwill/docker-django-migrations-example
+$ docker build -t web:1 .
+$ kubectl run db --image=postgres --env="POSTGRES_PASSWORD=my-secret-pw" \
+  --port 5432
+deployment "db" created
+$ kubectl expose deployment db
+service "db" exposed
+$ kubectl run web --image=web:1 --port 80 --env="POSTGRES_PASSWORD=my-secret-pw" \
+  --env="QOTD=Nostalgia isn't what it used to be." --replicas 2 \
+  # Or kubectl create -f k8s/web-v1-deployment.yml
+deployment "web" created
+$ kubectl expose deployment web --type=LoadBalancer
+service "web" exposed
+$ kubectl get deployments,services
+NAME         DESIRED      CURRENT       UP-TO-DATE   AVAILABLE   AGE
+db           1            1             1            1           1h
+web          2            2             2            2           1h
+NAME         CLUSTER-IP   EXTERNAL-IP   PORT(S)      AGE
+db           10.0.0.100   <none>        5432/TCP     1h
+kubernetes   10.0.0.1     <none>        443/TCP      2h
+web          10.0.0.65                  80/TCP       1h
+```
+
+---
+
 # Base Kubernetes resources
 
-## Nodes
-
+### `Node` (The cattle)
 The machines that can have pods scheduled on them
 
-## Pods
+### `Pod`
+The base resource that is scheduled (We'll get into them more in a bit)
 
-The base resource that is scheduled
-
-## Services
-
-The way we expose resources for other things to talk to them
+### `Service`
+A simple round robin load balancer that sends traffic to pods via a selector of pod labels.
 
 ---
 
 # Scheduling pods
 
-## Deployments
+### `Deployment`
 
-These technically create replica sets but I'll get into that.
+- The default way to schedule a pod
 
-## DaemonSets
+e.g. API, DB, Frontend, Workers
 
-These are for making sure a certain pod runs on every node.
+### `DaemonSet`
 
-## Job
+- Making sure an instance of this pod runs on every node, or every node of a certain type
+
+e.g. Logging agents, Monitoring agents, Cluster storage nodes
+
+### `Job`
 
 There are for once off pods.
 
+e.g. Migrations, Batch jobs,
+
 ---
 
-# More about resources
+# Basic Resource template
 
-```
-apiVersion:
-kind:
+```yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2016-06-19T19:31:33Z"
+  generation: 2
+  labels:
+    run: web
+  name: web
+  namespace: default
+  resourceVersion: "2445"
+  selfLink: /apis/extensions/v1beta1/namespaces/default/deployments/web
+  uid: "6dfc09fe-3654-11e6-929f-9a4437171650"
 spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: web
+  template: ...
 status:
+  availableReplicas: 2
+  observedGeneration: 2
+  replicas: 2
+  updatedReplicas: 2
 ```
 
 ---
 
-# More about Pods
+# Pods
 
-`kubectl explain pod.spec --recursive`
+## What
+- The smallest deployable unit
+- One or more containers to be scheduled together
+- Each pod gets a unique internal IP
 
-```
-...
+## Why
+- Management (e.g. shared fate, horizontal scaling)
+- Resource sharing and communication (e.g. sharing volumes, speaking on `localhost`)
 
-Specification of the desired behavior of the pod.
-
-...
-
-FIELDS:
-   ...
-   volumes  <[]Object>
-       cinder <Object>
-       configMap  <Object>
-       downwardAPI  <Object>
-       flocker  <Object>
-       iscsi  <Object>
-       nfs  <Object>
-       azureFile  <Object>
-       emptyDir <Object>
-       flexVolume <Object>
-       name <string>
-       awsElasticBlockStore <Object>
-       cephfs <Object>
-       gitRepo  <Object>
-       glusterfs  <Object>
-       fc <Object>
-       gcePersistentDisk  <Object>
-       hostPath <Object>
-       persistentVolumeClaim  <Object>
-       rbd  <Object>
-       secret <Object>
-   restartPolicy  <string>
-   containers <[]Object> -required-
-       imagePullPolicy  <string>
-       name <string>
-       readinessProbe <Object>
-       resources  <Object>
-       terminationMessagePath <string>
-       workingDir <string>
-       command  <[]string>
-       image  <string>
-       ports  <[]Object>
-       stdinOnce  <boolean>
-       tty  <boolean>
-       volumeMounts <[]Object>
-       env  <[]Object>
-       lifecycle  <Object>
-       securityContext  <Object>
-       stdin  <boolean>
-       args <[]string>
-       livenessProbe  <Object>
-   terminationGracePeriodSeconds  <integer>
-```
-
----
-
-# Getting started
-
-kubectl run web --image=web:1
-
-kubectl expose web --type=LoadBalancer
+## Uses
+- Log ingestion
+- Separating nginx from the webserver
+- Local cache management
 
 ---
 
@@ -314,7 +360,8 @@ kubectl expose web --type=LoadBalancer
         {
           ratio: '4:3',
           // slideNumberFormat: 'Slide %current% / %total%',
-          highlightStyle: 'monokai',
+          highlightStyle: 'tomorrow-night-eighties',
+          highlightLanguage: "default",
           highlightLines: true
         }
       );
