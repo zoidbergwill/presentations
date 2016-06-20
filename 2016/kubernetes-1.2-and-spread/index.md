@@ -170,30 +170,61 @@ web          10.0.0.65                  80/TCP       1h
 
 ---
 
-# Base Kubernetes resources
+# The building blocks
 
-### `Node` (The cattle)
-The machines that can have pods scheduled on them
+### `Node`
 
-### `Pod`
-The base resource that is scheduled (We'll get into them more in a bit)
+- Containers have to run somwehere
 
-### `Service`
-A simple round robin load balancer that sends traffic to pods via a selector of pod labels.
+- All machines that talk to the Kubernetes API Server, and can have pods
+scheduled on them
+
+- They can have unique `label`s which can be useful, for different sized
+  boxes, or guaranteeing `Pod`s run on certain `Node`s.
+
+- Whether it's AWS, DigitalOcean, GCP, or your own tin, they're destined
+  to die some day.
 
 ---
 
-# Scheduling pods
+# The building blocks
+
+### `Pod`
+
+- The base resource that is scheduled
+
+- It is destined to be re-scheduled, updated, or destroyed.
+
+We're gonna touch more on them in a bit, because `Pod`s and `Service`s
+are the main power of Kubernetes.
+
+---
+
+# The building blocks
+
+### `Service`
+
+- Simple load balancers that use a selection of labels to route traffic to
+pods.
+
+- They all have the following:
+  - `selector` for finding pods to forward the traffic.
+  - `clusterIP` since we have to hit the load balancer somehow
+  - `ports` to send the traffic from and to.
+  - Potentially more...
+---
+
+## Scheduling Pods
 
 ### `Deployment`
 
-- The default way to schedule a pod
+The default way to schedule a pod
 
 e.g. API, DB, Frontend, Workers
 
 ### `DaemonSet`
 
-- Making sure an instance of this pod runs on every node, or every node of a certain type
+Making sure an instance of this pod runs on every node, or every node of a certain type
 
 e.g. Logging agents, Monitoring agents, Cluster storage nodes
 
@@ -202,6 +233,10 @@ e.g. Logging agents, Monitoring agents, Cluster storage nodes
 These are for once off pods.
 
 e.g. Migrations, Batch jobs,
+
+### `ReplicationController`
+
+The old default way of scheduling pods...
 
 ---
 
@@ -240,12 +275,12 @@ status:
 
 # Pods
 
-## What
+## What are they?
 - The smallest deployable unit
 - One or more containers to be scheduled together
 - Each pod gets a unique internal IP
 
-## Why
+## Why more than one container?
 - Management (e.g. shared fate, horizontal scaling)
 - Resource sharing and communication (e.g. sharing volumes, speaking on `localhost`)
 
@@ -256,30 +291,198 @@ status:
 
 ---
 
-# Deploying a change
+# Fun with labels on `Pod`s
+
+## Canary deployments / AB testing
+
+### Deployments / Pods
+
+```yaml
+name: frontend
+replicas: 3
+...
+labels:
+  app: guestbook
+  tier: frontend
+  track: stable
+...
+image: gb-frontend:v3
+---
+name: frontend-canary
+replicas: 1
+...
+labels:
+  app: guestbook
+  tier: frontend
+  track: canary
+...
+image: gb-frontend:v4
+```
+
+### Service
+
+```yaml
+selector:
+  app: guestbook
+  tier: frontend
+```
+
+---
+
+# More Fun with `Pod`s
+
+## Orphan'ing a pod
+
+### Deployments / Pods
+
+The canary is acting up.
+
+Let's make sure it doesn't get scaled down in an update:
+
+```yaml
+name: frontend-canary
+...
+labels:
+  track: canary
+...
+image: gb-frontend:v4
+```
+
+### Service
+
+```yaml
+selector:
+  app: guestbook
+  tier: frontend
+```
 
 ---
 
 # How we got to Kubernetes 1.2
 
-* replication controllers + services
-* deployments + services
-* deployments + services + secrets + configmaps + persisten volumes
+- `ReplicationController`s `kubectl rolling-update` to new image tags, which
+  directly created `Pod`s
+- `Deployment`s creating `ReplicaSet`s with hashes of the pod spec which go on
+  to create `Pod`s, and we can `kubectl rollout undo`
+- Factor config out into `Secret`s and `ConfigMap`s, and load values from them
+  into `Deployment`s
+
+---
+
+# Deployment with a simple pod spec
+
+```yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  ...
+  name: web
+spec:
+  ...
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: web
+    spec:
+      containers:
+      - env:
+        - name: POSTGRES_PASSWORD
+          value: my-secret-pw
+        - name: QOTD
+          value: Nostalgia isn't what it used to be.
+        - name: MY_POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        image: web:1
+        name: web
+        ports:
+        - containerPort: 80
+        resources: {}
+status: {}
+```
+
+---
+
+# A more fancy pod spec
+
+```yaml
+spec:
+  ...
+  template:
+      ...
+    spec:
+      containers:
+      - env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres
+              key: password
+        - name: QOTD
+          valueFrom:
+            configMapKeyRef:
+              name: qotd
+              key: january
+        - name: MY_POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        image: web:1
+        name: web
+        ports:
+        - containerPort: 80
+```
+
+---
+
+# With a Separate `ConfigMap` and `Secret`
+
+`qotd-configmap.yml`:
+
+```yaml
+apiVersion: v1
+data:
+  january: Nostalgia isn't what it used to be.
+  february: Richard Stallman exists because he compiled himself into being.
+kind: ConfigMap
+metadata:
+  name: qotd
+  namespace: default
+```
+
+`postgres-secret.yml`:
+
+```yaml
+apiVersion: v1
+data:
+  # echo "my-secret-pw" | base64
+  password: bXktc2VjcmV0LXB3Cg==
+kind: Secret
+metadata:
+  name: postgres
+type: Opaque
+```
 
 ---
 
 # Resources I'm gonna ignore
 
-* configmaps
-* daemonsets (aka 'ds')
-* horizontalpodautoscalers (aka 'hpa')
-* ingress (aka 'ing')
-* jobs
-* limitranges (aka 'limits')
-* persistentvolumes (aka 'pv')
-* persistentvolumeclaims (aka 'pvc')
-* secrets
-* serviceaccounts
+### horizontalpodautoscalers (aka 'hpa')
+
+### ingress (aka 'ing')
+
+### limitranges (aka 'limits')
+
+### persistentvolumeclaims (aka 'pvc')
 
 ---
 
