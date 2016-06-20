@@ -10,7 +10,7 @@ Starting with Version 1.2
 .right[
 William Stewart]
 .right[
-@zoidbergwill]
+[@zoidbergwill](github.com/zoidbergwill)]
 
 ---
 
@@ -196,7 +196,7 @@ e.g. Logging agents, Monitoring agents, Cluster storage nodes
 
 ### `Job`
 
-There are for once off pods.
+These are for once off pods.
 
 e.g. Migrations, Batch jobs,
 
@@ -205,6 +205,7 @@ e.g. Migrations, Batch jobs,
 # Basic Resource template
 
 ```yaml
+$ kubectl get deployment/web -o yaml
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -264,7 +265,7 @@ status:
 
 ---
 
-# Resources I'm basically gonna ignore
+# Resources I'm gonna ignore
 
 * configmaps
 * daemonsets (aka 'ds')
@@ -281,24 +282,20 @@ status:
 
 # Kubernetes local development
 
-## docker-compose
+- docker-compose
 
-## monokube + localkube
+- hyperkube
 
----
-
-# Quick start
-* Creating your first deployment and service
-* Doing a rolling update
-* Persistent storage
+- localkube / minikube
 
 ---
 
 # War stories
-* memcached
-* kafka
-* kafka
-* gunicorn
+
+- Memcached
+- Kafka (Persistent storage, consistent broker IDs, etc. etc.)
+- Migrations
+- Accurate local dev
 
 ---
 
