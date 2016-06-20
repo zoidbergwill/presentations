@@ -6,11 +6,14 @@ Starting with Version 1.2
 
 ![Logo](k8s.png)
 
-
-.right[
+.left[
 William Stewart]
-.right[
-[@zoidbergwill](github.com/zoidbergwill)]
+.left[
+<i class="fa fa-slack" aria-hidden="true"></i> `zoidbergwill` on [zatech](http://zatech.co.za)]
+.left[
+<i class="fa fa-twitter" aria-hidden="true"></i> [`zoidbergwill`](http://twitter.com/zoidbergwill)]
+.left[
+<i class="fa fa-github" aria-hidden="true"></i> [`zoidbergwill`](http://github.com/zoidbergwill)]
 
 ---
 
@@ -299,8 +302,30 @@ status:
 
 ---
 
-## Questions?
+class:center
 
-## Thanks
+[![Cult of the Party Parrot](partyparrot.png)](http://cultofthepartyparrot.com)
 
-## Links
+## Thanks, Questions, and Sauce
+
+<i class="fa fa-github" aria-hidden="true"></i> [Slides](https://zoidbergwill.github.io/presentations/2016/kubernetes-1.2-and-spread/) [Code](https://github.com/zoidbergwill/kubernetes-examples)
+
+---
+
+## Things you should read
+
+https://danluu.com/google-sre-book
+
+https://queue.acm.org/detail.cfm?id=2898444/
+
+https://kubernetes.io/docs/getting-started-guides/docker/
+
+https://kubernetes.io/docs/user-guide/ui/
+
+https://cncf.io/community
+
+https://github.com/kubernetes/kubernetes-anywhere/
+
+https://github.com/kubernetes/minikube
+
+https://github.com/ramitsurana/awesome-kubernetes
