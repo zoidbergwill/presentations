@@ -444,14 +444,14 @@ spec:
 
 ---
 
-# With a Separate `ConfigMap` and `Secret`
+# Separate `ConfigMap` & `Secret`
 
 `qotd-configmap.yml`:
 
 ```yaml
 apiVersion: v1
 data:
-  january: Nostalgia isn't what it used to be.
+  january: "Nostalgia isn't what it used to be."
   february: Richard Stallman exists because he compiled himself into being.
 kind: ConfigMap
 metadata:
@@ -478,30 +478,95 @@ type: Opaque
 
 ### horizontalpodautoscalers (aka 'hpa')
 
+`kubectl autoscale deployment foo --min=2 --max=10  --cpu-percent=80`
+
 ### ingress (aka 'ing')
+
+> Ingress is a collection of rules that allow inbound connections to reach
+> the endpoints defined by a backend. An Ingress can be configured to give
+> services externally-reachable urls, load balance traffic, terminate SSL,
+> offer name based virtual hosting etc.
 
 ### limitranges (aka 'limits')
 
+These allow setting namespace-wide resource-specific limit ranges.
+
 ### persistentvolumeclaims (aka 'pvc')
+
+These are an interesting abstraction on top of peristent volumes.
 
 ---
 
 # Kubernetes local development
 
-- docker-compose
+- docker-compose (Not really accurate)
 
-- hyperkube
+- hyperkube (Running a single-node cluster in docker-machine/locally)
 
-- localkube / minikube
+- localkube / minikube (Officlal github.com/kubernetes/minikube)
+  There was:
+    - boot2kube/kmachine/kcompose
+    - monokube
+    - localkube
+
+```markdown
+## Primary Goals
+
+From a high level the goal is to make it easy for a new user to run a
+Kubernetes cluster and play with curated examples that require least
+amount of knowledge about Kubernetes.
+These examples will only use kubectl and only a subset of Kubernetes
+features that are available will be exposed.
+
+- Works across multiple OSes - OS X, Linux and Windows primarily.
+- Single command setup and teardown UX.
+- Unified UX across OSes
+- Minimal dependencies on third party software.
+- Minimal resource overhead.
+- Eliminate any other alternatives to local cluster deployment.
+```
+
+[local cluster UX
+proposal](https://github.com/kubernetes/kubernetes/blob/master/docs/proposals/local-cluster-ux.md)
 
 ---
 
 # War stories
 
 - Memcached
-- Kafka (Persistent storage, consistent broker IDs, etc. etc.)
+- Kafka
 - Migrations
 - Accurate local dev
+
+---
+
+# Memcached and Me being dumb
+
+---
+
+# Kafka
+
+- tutorials make running zookeeper/kafka easy
+- they cheat
+
+Pods are disposable
+
+- Kafka v.0.9 can auto assign broker IDs, which seems useful for
+  disposable pods, but it breaks when using another broker IDs storage
+  volume.
+
+- Google/AWS persistent disks are well-supported, but not really with
+  replication controllers / replica sets / deployments.
+
+- Peer discovery is also hard
+
+---
+
+# Migrations
+
+- Distributed systems are hard.
+- Schema changes are hard.
+- Rolling updates to distributed systems with schema changes are hard
 
 ---
 
