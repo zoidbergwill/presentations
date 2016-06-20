@@ -118,7 +118,7 @@ class: center, middle
   - Time savings
 
 .bottom.right[
-[Dan Luu's Notes on Google's Site Reliability Engineering book](danluu.com/google-sre-book/)]
+[Dan Luu's Notes on Google's Site Reliability Engineering book](http://danluu.com/google-sre-book/)]
 
 ---
 
