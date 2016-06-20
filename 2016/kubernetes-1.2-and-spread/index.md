@@ -533,10 +533,10 @@ proposal](https://github.com/kubernetes/kubernetes/blob/master/docs/proposals/lo
 
 # War stories
 
-- Memcached
-- Kafka
-- Migrations
-- Accurate local dev
+### Memcached
+### Kafka
+### Migrations
+### Accurate local dev
 
 ---
 
@@ -544,21 +544,107 @@ proposal](https://github.com/kubernetes/kubernetes/blob/master/docs/proposals/lo
 
 ---
 
-# Kafka
+# Kafka: Persistent Storage
 
 - tutorials make running zookeeper/kafka easy
-- they cheat
+- they cheat.
 
-Pods are disposable
+- Scaling up replicas of a Docker container with `emptyDir`, `NFS`, or
+  `hostPath` are easy
+- `awsElasticBlockStore` or `gcePersistenDisk` less so
+
+GCP showing off running exhibitor in Kubernetes
+
+```yaml
+...
+spec:
+ replicas: 3
+ template:
+   ...
+   spec:
+    containers:
+    - image: mbabineau/zookeeper-exhibitor
+      ...
+      volumeMounts:
+      - name: nfs
+        mountPath: "/opt/zookeeper/local_configs"
+    volumes:
+    - name: nfs
+*      nfs:
+*        server: singlefs-1-vm
+*        path: /data
+```
+
+Another Kafka example:
+
+```
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: kafka
+spec:
+  replicas: 1
+  template:
+    spec:
+      volumes:
+        - name: config
+*          emptyDir: {}
+        - name: data
+*          emptyDir: {}
+        - name: log
+*          emptyDir: {}
+      containers:
+        - name: server
+          image: elevy/kafka:latest
+          ...
+          volumeMounts:
+            ...
+```
+
+---
+
+# `gcePersistentDisk`
+
+They only allow a single pod binding a disk in read-write mode  at
+a time, so as soon as you scale beyond one replica it cries.
+
+So you have to make `Deployment`s for each individual pod for now.
+
+```
+    volumes:
+      - name: data
+        gcePersistentDisk:
+          pdName: kafka-1
+          fsType: ext4
+    containers:
+      - name: server
+        ...
+        volumeMounts:
+          - mountPath: /kafka
+            name: data
+    nodeSelector:
+      custom/node-id: "1"
+```
+
+---
+
+# Kafka: Pods are disposable
 
 - Kafka v.0.9 can auto assign broker IDs, which seems useful for
   disposable pods, but it breaks when using another broker IDs storage
   volume.
 
-- Google/AWS persistent disks are well-supported, but not really with
-  replication controllers / replica sets / deployments.
-
-- Peer discovery is also hard
+- Peer discovery is also hard, but unique deployments make it
+  possible, with unique services:
+  ```yaml
+  spec:
+    replicas: 1
+    metadata:
+      name: kafka-3
+      labels:
+        app: kafka
+        server-id: "3"
+  ```
 
 ---
 
@@ -567,6 +653,15 @@ Pods are disposable
 - Distributed systems are hard.
 - Schema changes are hard.
 - Rolling updates to distributed systems with schema changes are hard
+
+---
+
+class:center
+
+# Docker sucks
+# Everything sucks
+
+## I've whined about local development and it's getting better
 
 ---
 
