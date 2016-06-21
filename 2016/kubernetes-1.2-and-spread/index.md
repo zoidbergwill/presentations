@@ -384,7 +384,7 @@ selector:
 
 ---
 
-# Deployment with a simple pod spec
+# A Simple Pod Spec
 
 ```yaml
 apiVersion: extensions/v1beta1
@@ -420,7 +420,37 @@ status: {}
 
 ---
 
-# A more fancy pod spec
+# `ConfigMap` & `Secret`
+
+`qotd-configmap.yml`:
+
+```yaml
+apiVersion: v1
+data:
+  january: "Nostalgia isn't what it used to be."
+  february: Richard Stallman exists because he compiled himself into being.
+kind: ConfigMap
+metadata:
+  name: qotd
+  namespace: default
+```
+
+`postgres-secret.yml`:
+
+```yaml
+apiVersion: v1
+data:
+  # echo "my-secret-pw" | base64
+  password: bXktc2VjcmV0LXB3Cg==
+kind: Secret
+metadata:
+  name: postgres
+type: Opaque
+```
+
+---
+
+# A More Fancy Pod Spec
 
 ```yaml
 spec:
@@ -459,48 +489,22 @@ spec:
 
 ---
 
-# Separate `ConfigMap` & `Secret`
-
-`qotd-configmap.yml`:
-
-```yaml
-apiVersion: v1
-data:
-  january: "Nostalgia isn't what it used to be."
-  february: Richard Stallman exists because he compiled himself into being.
-kind: ConfigMap
-metadata:
-  name: qotd
-  namespace: default
-```
-
-`postgres-secret.yml`:
-
-```yaml
-apiVersion: v1
-data:
-  # echo "my-secret-pw" | base64
-  password: bXktc2VjcmV0LXB3Cg==
-kind: Secret
-metadata:
-  name: postgres
-type: Opaque
-```
-
----
-
 # Resources I'm gonna ignore
 
 ### horizontalpodautoscalers (aka 'hpa')
 
-`kubectl autoscale deployment foo --min=2 --max=10  --cpu-percent=80`
+```
+$ kubectl autoscale deployment web --min=2 --max=10  --cpu-percent=80
+```
 
 ### ingress (aka 'ing')
 
-> Ingress is a collection of rules that allow inbound connections to reach
-> the endpoints defined by a backend. An Ingress can be configured to give
-> services externally-reachable urls, load balance traffic, terminate SSL,
-> offer name based virtual hosting etc.
+```
+Ingress is a collection of rules that allow inbound connections to reach
+the endpoints defined by a backend. An Ingress can be configured to give
+services externally-reachable urls, load balance traffic, terminate SSL,
+offer name based virtual hosting etc.
+```
 
 ### limitranges (aka 'limits')
 
@@ -633,7 +637,7 @@ a time, so as soon as you scale beyond one replica it cries.
 
 So you have to make `Deployment`s for each individual pod for now.
 
-```
+```yaml
     volumes:
       - name: data
         gcePersistentDisk:
@@ -700,18 +704,25 @@ class:center
 
 ## Things you should read
 
-https://danluu.com/google-sre-book
+- O'Reilly's Site Reliability Engineering: How Google Runs Production Systems
+  [Amazon](http://www.amazon.com/Site-Reliability-Engineering-Production-Systems-ebook/dp/B01DCPXKZ6/)
 
-https://queue.acm.org/detail.cfm?id=2898444/
+- Dan Luu's [notes](https://danluu.com/google-sre-book) are good too
 
-https://kubernetes.io/docs/getting-started-guides/docker/
+- Borg, Omega, and Kubernetes
+  Lessons learned from three container-management systems over a decade.
+  [Essay](https://queue.acm.org/detail.cfm?id=2898444)
 
-https://kubernetes.io/docs/user-guide/ui/
+- [Running a single node Kubernetes cluster with Docker](https://kubernetes.io/docs/getting-started-guides/docker/)
 
-https://cncf.io/community
+- [`kubernetes-dashboard`](https://kubernetes.io/docs/user-guide/ui/)
 
-https://github.com/kubernetes/kubernetes-anywhere/
+- [Cloud Native Computing Foundation](https://cncf.io/community)
 
-https://github.com/kubernetes/minikube
+- [Kubernetes-Anywhere](https://github.com/kubernetes/kubernetes-anywhere/): An official Kubernetes repo with some documentation on running Kubernetes with Docker for Mac beta
 
-https://github.com/ramitsurana/awesome-kubernetes
+- [`minikube`](https://github.com/kubernetes/minikube): The official Go
+  binary for running a simpler local cluster.
+
+- [`awesome-kubernetes`](https://github.com/ramitsurana/awesome-kubernetes)
+  list on GitHub, cuz it has some neat things.
