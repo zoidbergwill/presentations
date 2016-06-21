@@ -692,6 +692,12 @@ class:center
 
 ---
 
+class:center, middle
+
+# Superbalist.com and Takealot.com are hiring!!!
+
+---
+
 class:center
 
 [![Cult of the Party Parrot](partyparrot.png)](http://cultofthepartyparrot.com)
