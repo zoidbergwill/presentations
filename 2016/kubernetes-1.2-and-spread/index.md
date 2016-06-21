@@ -152,6 +152,12 @@ class: center, middle
 
 ---
 
+class: center,middle
+
+# kubectl
+
+---
+
 # Let's set up a basic environment
 
 ```
@@ -163,8 +169,7 @@ deployment "db" created
 $ kubectl expose deployment db
 service "db" exposed
 $ kubectl run web --image=web:1 --port 80 --env="POSTGRES_PASSWORD=my-secret-pw" \
-  --env="QOTD=Nostalgia isn't what it used to be." --replicas 2 \
-  # Or kubectl create -f k8s/web-v1-deployment.yml
+  --replicas 2  # Or kubectl create -f k8s/web-v1-deployment.yml
 deployment "web" created
 $ kubectl expose deployment web --type=LoadBalancer
 service "web" exposed
