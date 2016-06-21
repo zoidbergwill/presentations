@@ -549,56 +549,64 @@ proposal](https://github.com/kubernetes/kubernetes/blob/master/docs/proposals/lo
 - tutorials make running zookeeper/kafka easy
 - they cheat.
 
-- Scaling up replicas of a Docker container with `emptyDir`, `NFS`, or
-  `hostPath` are easy
-- `awsElasticBlockStore` or `gcePersistenDisk` less so
+---
 
-GCP showing off running exhibitor in Kubernetes
+# Lots of storage works
 
-```yaml
+- `emptyDir`
+- `hostPath`
+- `gcePersistentDisk`
+- `awsElasticBlockStore`
+- `nfs`
+- `iscsi`
+- `flocker`
+- `glusterfs`
+- `rbd`
+- `gitRepo`
+- `secret`
+- `persistentVolumeClaim`
+- `downwardAPI`
+- `FlexVolume`
+- `AzureFileVolume`
+- `vsphereVirtualDisk`
+
+---
+
+# Sneaky Examples
+
+Most Kubernetes examples use replicas with volumes using `emptyDir` or
+`hostPath` are easy, `gcePersistenDisk` less so
+
+A Kafka example:
+
+```
 ...
 spec:
- replicas: 3
- template:
-   ...
-   spec:
-    containers:
-    - image: mbabineau/zookeeper-exhibitor
-      ...
-      volumeMounts:
-      - name: nfs
-        mountPath: "/opt/zookeeper/local_configs"
-    volumes:
-    - name: nfs
-*      nfs:
-*        server: singlefs-1-vm
-*        path: /data
-```
-
-Another Kafka example:
-
-```
-apiVersion: v1
-kind: ReplicationController
-metadata:
-  name: kafka
-spec:
-  replicas: 1
+  replicas: 3
   template:
     spec:
-      volumes:
-        - name: config
-*          emptyDir: {}
-        - name: data
-*          emptyDir: {}
-        - name: log
+*      volumes:
+*        - name: data
 *          emptyDir: {}
       containers:
         - name: server
           image: elevy/kafka:latest
           ...
           volumeMounts:
-            ...
+          - name: data
+            mountPath: /kafka/data
+```
+
+GCP showing off running exhibitor in Kubernetes
+
+```yaml
+ replicas: 3
+ template:
+    volumes:
+    - name: nfs
+*      nfs:
+*        server: singlefs-1-vm
+*        path: /data
 ```
 
 ---
