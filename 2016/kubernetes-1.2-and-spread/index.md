@@ -27,23 +27,29 @@ William Stewart]
 
 # Overview
 
-- What is Docker?
-- What is Kubernetes?
-  - An overview of Kubernetes
-  - Running a simple app
-  - Updating it
-  - How we got to version 1.2. The TL;DR
-  - Cool "resources" I'm gonna have to skip over for now
-- Kubernetes local development
-  - Docker-compose
-  - hyperkube / kubernetes-anywhere
-  - localkube / minikube
-- Kubernetes demo!
-- War stories
-  - Memcached
-  - Kafka (Persistent storage, consistent broker IDs, etc. etc.)
-  - Migrations
-- Questions
+### Docker
+
+### Kubernetes
+
+  <!--- An overview of Kubernetes-->
+  <!--- Running a simple app-->
+  <!--- Updating it-->
+  <!--- How we got to version 1.2. The TL;DR-->
+  <!--- Cool "resources" I'm gonna have to skip over for now-->
+
+### Demo
+
+### Kubernetes local development
+
+  <!--- Docker-compose-->
+  <!--- hyperkube / kubernetes-anywhere-->
+  <!--- localkube / minikube-->
+
+### War stories
+
+  <!--- Memcached-->
+  <!--- Kafka (Persistent storage, consistent broker IDs, etc. etc.)-->
+  <!--- Migrations-->
 
 ---
 
@@ -60,6 +66,9 @@ William Stewart]
   - ECS
   - Helios
   - Swarmkit
+
+- <p lang="en" dir="ltr">This is not a zero sum game. People will be using Kubernetes, Swarm, and Mesos for time to come. Don&#39;t be afraid of competition, embrace it.</p>&mdash; Kelsey Hightower (@kelseyhightower) <a href="https://twitter.com/kelseyhightower/status/744946988739756032">June 20, 2016</a>
+
 
 ---
 
@@ -133,12 +142,13 @@ class: center, middle
 
 # How does it help?
 
-- Container hosting
-- Config changes
-- Supervision
-- Monitoring
-- Rolling deployments
-- Networking
+### - Container hosting
+### - Config changes
+### - Supervision
+### - Monitoring
+### - Rolling deployments
+### - Networking
+### - and more...
 
 ---
 
