@@ -9,12 +9,13 @@ Starting with Version 1.2
 .left[
 William Stewart]
 .left[
-<i class="fa fa-slack" aria-hidden="true"></i> `zoidbergwill` on [zatech](http://zatech.co.za)]
+[<i class="fa fa-slack" aria-hidden="true"></i> zatech](http://zatech.co.za)]
 .left[
-<i class="fa fa-twitter" aria-hidden="true"></i> [`zoidbergwill`](http://twitter.com/zoidbergwill)]
+[<i class="fa fa-twitter" aria-hidden="true"></i>](http://twitter.com/zoidbergwill)]
 .left[
-<i class="fa fa-github" aria-hidden="true"></i> [`zoidbergwill`](http://github.com/zoidbergwill)]
-
+[<i class="fa fa-github" aria-hidden="true"></i>](http://github.com/zoidbergwill)]
+.left[
+<i class="fa fa-pied-piper-pp" aria-hidden="true"></i> `zoidbergwill` basically everywhere]
 ---
 
 # Intro
@@ -704,7 +705,9 @@ class:center
 
 ## Thanks, Questions, and Sauce
 
-<i class="fa fa-github" aria-hidden="true"></i> [Slides](https://zoidbergwill.github.io/presentations/2016/kubernetes-1.2-and-spread/) [Code](https://github.com/zoidbergwill/kubernetes-examples)
+<i class="fa fa-github" aria-hidden="true"></i> [Code](https://github.com/zoidbergwill/kubernetes-examples)
+
+https://zoidbergwill.github.io/presentations/2016/kubernetes-1.2-and-spread/
 
 ---
 
