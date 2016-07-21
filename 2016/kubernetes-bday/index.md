@@ -1,6 +1,6 @@
 class: center, middle
 
-# Kubernetes's First Birthday!
+# Kubernetes' First Birthday!
 
 <img src="tada.png"> <img style="width: 50%" srcset="logo.svg"> <img src="tada.png">
 
@@ -13,6 +13,8 @@ Join ZATech!!!]
 class: center, middle
 
 # Welcome!!!
+
+<img style="width: 100%" src="k8sbday.png">
 
 ---
 
