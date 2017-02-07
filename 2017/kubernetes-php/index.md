@@ -63,7 +63,8 @@ William Stewart]
 <!--.center[-->
 <!--![Docker](what-is-docker-diagram.png) ![VM](what-is-vm-diagram.png)]-->
 .center[
-  ![Why Containers](why_containers.svg)]
+  <img src="why_containers.svg" alt="Why Containers" style="width: 90%">
+]
 
 ---
 
@@ -398,7 +399,9 @@ class:center, middle
 
 [<i class="fa fa-github" aria-hidden="true"></i> Code](https://github.com/zoidbergwill/kubernetes-php-examples)
 
-Slides: [www.zoidbergwill.com/presentations/2017/kubernetes-php/](https://zoidbergwill.github.io/presentations/2017/kubernetes-php/)
+Slides: [zoidergwill.github.io/presentations/2017/kubernetes-php/](https://zoidbergwill.github.io/presentations/2017/kubernetes-php/)
+
+Links on the next slide!
 
 ---
 
