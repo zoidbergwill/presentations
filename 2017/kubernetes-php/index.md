@@ -53,6 +53,10 @@ William Stewart]
 
 # Docker
 
+<br>
+<br>
+<br>
+
 .center[
   ![Docker hadouken](docker_hadouken.png)]
 
@@ -111,6 +115,8 @@ COPY . /app
 
 # Running Docker in production
 
+<br>
+
 .center[
 ![Docker in production](docker-production.jpg)]
 
@@ -167,7 +173,7 @@ COPY . /app
 
 ---
 
-## This allows us to easily move towards SOA,
+## Helps us to easily move towards SOA,
 
 - Easily start new projects in any language, that can rely on the same service discovery (using DNS)
 
@@ -196,31 +202,31 @@ COPY . /app
 
   ```
   annotations:
-    prometheus.io/port: "9150"
-    prometheus.io/scrape: "true"
+      prometheus.io/port: "9150"
+      prometheus.io/scrape: "true"
   ```
 
   ```
   apiVersion: extensions/v1beta1
   kind: Ingress
   metadata:
-    annotations:
-  *    kubernetes.io/ingress.class: gce
-  *    kubernetes.io/tls-acme: "true"
-    name: general-ingress
+      annotations:
+    *   kubernetes.io/ingress.class: gce
+    *   kubernetes.io/tls-acme: "true"
+      name: general-ingress
   spec:
-    rules:
-    - host: tasks.zoidbergwill.com
-      http:
-        paths:
-        - backend:
-            serviceName: tasks-app
-            servicePort: 80
-          path: /
-    tls:
-    - hosts:
-      - tasks.zoidbergwill.com
-      secretName: tasks-tls
+      rules:
+      - host: tasks.zoidbergwill.com
+        http:
+          paths:
+          - backend:
+              serviceName: tasks-app
+              servicePort: 80
+            path: /
+      tls:
+      - hosts:
+        - tasks.zoidbergwill.com
+        secretName: tasks-tls
     ```
 
 ---
@@ -307,7 +313,7 @@ access.log = /proc/self/fd/2
 
 Access logs are junk for Laravel:
 
-`127.0.0.1 - 07/Feb/2017:13:57:57 +0000 "GET /index.php" 200` (x 1337)
+`:: - 07/Feb/2017:13:57:57 +0000 "GET /index.php" 200` (x 1337)
 
 error_log can be pretty crap too:
 
@@ -322,6 +328,8 @@ error_log can be pretty crap too:
 ---
 
 ## Going full circle
+
+Let's try `single` again:
 
 ```
 > cat entrypoint.sh
@@ -393,11 +401,13 @@ Migrating before starting a rolling update
 
 class:center, middle
 
-## Superbalist.com and Takealot.com are hiring!!!
+### Superbalist.com and Takealot.com are hiring!!!
 
-## Source
+<br>
 
-[<i class="fa fa-github" aria-hidden="true"></i> Code](https://github.com/zoidbergwill/kubernetes-php-examples)
+### Source
+
+<i class="fa fa-github" aria-hidden="true"></i>https://github.com/zoidbergwill/kubernetes-php-examples
 
 Slides: [zoidergwill.github.io/presentations/2017/kubernetes-php/](https://zoidbergwill.github.io/presentations/2017/kubernetes-php/)
 
@@ -405,7 +415,7 @@ Links on the next slide!
 
 ---
 
-## Links  
+## Links
 
 - O'Reilly's Site Reliability Engineering: How Google Runs Production Systems
   [Amazon](http://www.amazon.com/Site-Reliability-Engineering-Production-Systems-ebook/dp/B01DCPXKZ6/)
