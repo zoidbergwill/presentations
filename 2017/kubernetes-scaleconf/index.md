@@ -21,16 +21,14 @@
 
 # Who Am I Really
 
-.center[
-  ![:scale 40%](dougs_photo.jpg)
-]
+![:scale 40%](dougs_photo.jpg)
 
 ### William Stewart
 
-#### Site Reliability and DevOps at Superbalist.com
+#### Site Reliability and DevOps Team at Superbalist.com
 
 - Only cried about Docker Inc. ~~6~~ 7 times
-- Plays french horn and has a fixed gear bicycle
+- Plays French Horn and rides a fixie
 - Denies being a hipster
 - Yes, I know DevOps isn't supposed to be a person or a team
 
@@ -39,53 +37,45 @@
 # Who is Superbalist
 
 .center[
-  ![:scale 80%](superbalist.png)
+  ![:scale 100%](superbalist.png)
 ]
 
-- The number 1 fashion destination for 18-35 year olds.
-- We send lots of e-mails (You can unsubscribe).
-- We didn't go down on Black Friday.
-
 ---
+
+class: center
 
 # Black Friday 2015
 
-- monolithic codebase with one or two other services
-- 30+ individual servers on Google Cloud Platform
-- new service meant `n` new servers
-- lots of machines using less than 30% of resources, even at peak
+<br>
+
+## <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+
+<br>
+
+## <i class="fa fa-building" aria-hidden="true"></i> 4 services
+## <i class="fa fa-server" aria-hidden="true"></i> ±30 servers
+
+<br>
+
+## <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i>
 
 ---
 
-# No need to waste
+# HA can mean wasted resources
 
-```
-memcached                         160m           609Mi
-redis                               3m             1Mi
-memcached                           1m           112Mi
-memcached                           0m            28Mi
-...
-rabbitmq                           21m           108Mi
-```
+<br>
 
-```
-NAME                                   CPU%   MEMORY%
-gke-hive-swimming-pool-d0bbd64a-acc9   41%    69%
-gke-hive-swimming-pool-d0bbd64a-ee07   40%    57%
-...
-gke-hive-swimming-pool-d0bbd64a-woun   18%    53%
-```
+.center[
+  <i class="fa fa-tasks" style="font-size: 400px;" aria-hidden="true"></i>
+]
 
 ---
 
 # 2016 and beyond
 
-- move to service orientated architecture
-- less than 20 servers
-- 15+ services
-- 80% into Kubernetes
-- much more efficient resource usage
-- Simpler scaling
+## <i class="fa fa-building" aria-hidden="true"></i> ±15 services
+## <i class="fa fa-server" aria-hidden="true"></i> &lt;20 servers
+## ⎈ 80% into Kubernetes
 
 ---
 
@@ -102,24 +92,32 @@ $ kubectl scale deployment/website --replicas 500
 
 # The journey so far
 
-**2015 November**
+## 2015 November
 - First commit related to Kubernetes
 
-**2016 February**
+## 2016 February
 - All new services, and some stateful stuff into Kubernetes
 - Some attempts at bash substitution, `sed`, and `envsubst` for
   templating deploys.
 
-**2016 July**
+---
+
+# The journey so far (Cont.)
+
+## 2016 July
 - Monolithic repo into Kubernetes in staging
 
-**2016 Aug**
-- Local dev into Minikube and move to Jinja2 CLI
+## 2016 Aug
+- All local dev into Minikube and move to Jinja2 CLI
 
-**2016 November**
+---
+
+# The journey so far (Cont.)
+
+## 2016 November
 - Monolithic repo into Kubernetes in production
 
-**2017 March**
+## 2017 March
 - Going forward
 
 ---
@@ -134,45 +132,35 @@ $ kubectl scale deployment/website --replicas 500
 
 # What Docker gives us?
 
-- Language agnostic build artifacts
-- Simple `Dockerfile` which stores the recipe for an artifact with smart
-  build caching
-
+## The `Dockerfile`
 
 ```
-FROM python:alpine
+FROM python
 ADD src/requirements.txt .
 RUN pip install -r requirements.txt --no-cache-dir
 ADD src .
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:main"]
 ```
 
 ---
 
-# three column image of caching
+# Docker build caching
+
+## Adding a requirement
 
 ```
-FROM python:alpine
-ADD src/requirements.txt .
-RUN pip install -r requirements.txt --no-cache-dir
-ADD src .
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:main"]
-```
-
-```
-FROM python:alpine
-ADD src/requirements.txt .
-RUN pip install -r requirements.txt --no-cache-dir
-*ADD src .
-*CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:main"]
-```
-
-```
-FROM python:alpine
+FROM python
 *ADD src/requirements.txt .
 *RUN pip install -r requirements.txt --no-cache-dir
 *ADD src .
-*CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:main"]
+```
+
+## Editing source code
+
+```
+FROM python
+ADD src/requirements.txt .
+RUN pip install -r requirements.txt --no-cache-dir
+*ADD src .
 ```
 
 ---
@@ -182,7 +170,7 @@ class: center, middle
 # What is Kubernetes?
 
 
-.bottom.center[
+.center[
   ![](k8s_logo.png)
 ]
 
@@ -207,118 +195,100 @@ class: center, middle
 
 ---
 
-# Quickstart on GCP
+# Running an example app
 
-Once you've installed the google cloud sdk
-
-## Set up a cluster
-
-```
-$ gcloud container clusters create pleiades
-$ gcloud container clusters get-credentials pleiades
-$ kubectl config use-context gke_zoidbergwill-php-meetup_europe-west1-d_pleiades
-```
+![:scale 90%](examples/docker_counter_dashboard.png)
 
 ---
 
-# Running an example app
+# Kubernetes Primitives: Deployments
 
-## GUI
-
-![:scale 48%](examples/docker_counter_dashboard.png) ![:scale 48%](examples/redis_dashboard.png)
+![](resource-breakdown.png)
 
 ---
 
-# Running an example app
+# Kubernetes Primitives: Services
 
-### CLI
+## A/B testing
 
-```
-$ kubectl run redis --image=redis --expose=true --port=6379
-service "redis" created
-deployment "redis" created
-$ kubectl run docker-counter --image=tuna/docker-counter23 --replicas --port=5000
-deployment "docker-counter" created
-$ kubectl expose deploy/docker-counter --type LoadBalancer
-service "docker-counter" exposed
-$ kubectl get svc/docker-counter -w
-$ kubectl get deploy,svc,po -o wide
-NAME                    DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-deploy/docker-counter   5         5         5            5           2m
-deploy/redis            1         1         1            1           1m
+## Rolling updates
 
-NAME                                 READY     STATUS    RESTARTS   AGE       IP           NODE
-po/docker-counter-1427949298-4zwgn   1/1       Running   0          2m        172.17.0.8   minikube
-po/docker-counter-1427949298-6nsqc   1/1       Running   0          2m        172.17.0.6   minikube
-po/docker-counter-1427949298-7c9k0   1/1       Running   0          2m        172.17.0.7   minikube
-po/docker-counter-1427949298-r99q3   1/1       Running   0          2m        172.17.0.9   minikube
-po/docker-counter-1427949298-tsm6t   1/1       Running   0          2m        172.17.0.5   minikube
-po/redis-1148828176-pfbpb            1/1       Running   0          1m        172.17.0.4   minikube
-
-NAME                 CLUSTER-IP   EXTERNAL-IP   PORT(S)          AGE       SELECTOR
-svc/docker-counter   10.0.0.143   <pending>     5000:32204/TCP   2m        run=docker-counter
-svc/redis            10.0.0.135   <none>        6379/TCP         1m        run=redis
-```
+## Canaries
 
 ---
 
 # Dev vs Ops experience
 
-Similar to `docker` UX:
-
-`kubectl run`
-
-`kubectl logs`
-
-`kubectl cp`
-
-`kubectl exec`
-
 ---
 
 # Tools we use
 
-- docker
-- gcloud
-- kubectl
-- Jinja2
-- minikube
-- stern
+## docker
+## gcloud
+## kubectl
+## Jinja2
+## minikube
+## stern
 
 ---
 
 # Deployment evolution
 
-- envsubst
-
-- sed
+## sed
   ```
-  DEPLOYED_IMAGE_URL="$(kubectl get pods -l app=api -o=jsonpath='{.items[0].spec.containers[0].image}')"
-  NEW_DEPLOYMENT=$(kubectl get deployment/api -o yaml)
-  NEW_DEPLOYMENT=$(echo "${CURRENT_DEPLOYMENT}" | sed "s@image: ${DEPLOYED_IMAGE_URL}@image: ${NEW_IMAGE_URL}@")
-  echo "${CURRENT_DEPLOYMENT}" | kubectl apply -f -
+  sed "s@image: ${DEPLOYED_IMAGE_URL}@image: ${NEW_IMAGE_URL}@"
+  ```
+## envsubst
+  ```
+  envsubst deployment.yml.template
   ```
 
-- jinja2 (with j2-cli)
-
+## jinja2 (with j2-cli)
 
 ---
 
 # Local dev evolution
 
----
+## docker-compose
 
+## hyperkube
 
-# Struggles
-
-- Kafka and storage in general
-- Migrations
-- Accurate local dev
-- Logging
-- Cron and long running processes
-- Signal propagation
-- Init systems
+## minikube
 
 ---
 
-# Epilogue
+## Ephemeral containers
+
+---
+
+## Build-time secrets
+
+---
+
+## Storage volumes
+
+All the docs are a lie.
+
+---
+
+## Migrations
+
+Not a container problem, just a distributed systems one.
+
+---
+
+## Logging
+
+---
+
+## Cron and long running processes
+
+---
+
+## Signal propagation and init systems
+
+---
+
+# Questions
+
+[zoidbergwill.github.io/presentations/2017/kubernetes-scaleconf/](zoidbergwill.github.io/presentations/2017/kubernetes-scaleconf/)
