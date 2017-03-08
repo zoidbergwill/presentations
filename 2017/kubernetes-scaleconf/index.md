@@ -2,13 +2,13 @@
 
 # Superbalist and Kubernetes
 
-## A journey
-
 ![](phlippy_sunset.png)
+
+## A journey
 ]
 
 .left[
-  William Stewart (@zoidbergwill)
+  `@zoidbergwill`
 ]
 
 ---
