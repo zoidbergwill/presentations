@@ -177,7 +177,7 @@ class: center, middle
 
 
 .center[
-  ![](k8s_logo.png)
+  ![:scale 60%](logo_with_border.png)
 ]
 
 ---
