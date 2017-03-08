@@ -13,6 +13,14 @@
 
 ---
 
+class: center
+
+<br>
+
+## <p lang="en" dir="ltr">This is not a zero sum game. People will be using Kubernetes, Swarm, and Mesos for time to come. Don&#39;t be afraid of competition, embrace it.</p>&mdash; Kelsey Hightower (@kelseyhightower) <a href="https://twitter.com/kelseyhightower/status/744946988739756032">June 20, 2016</a>
+
+---
+
 # Who Am I
 
 ![:scale 100%](guido-van-rossum.png)
@@ -109,42 +117,40 @@ $ kubectl scale deployment/website --replicas 500
 
 ---
 
-# The journey so far
+class: center, middle, title
 
-## 2015 November
-- First commit related to Kubernetes
-
-## 2016 February
-- All new services, and some stateful stuff into Kubernetes
-- Some attempts at bash substitution, `sed`, and `envsubst` for
-  templating deploys.
+# 2015
+# November
 
 ---
 
-# The journey so far (Cont.)
+class: center, middle, title
 
-## 2016 July
-- Monolithic repo into Kubernetes in staging
-
-## 2016 Aug
-- All local dev into Minikube and move to Jinja2 CLI
+# 2016
+# Part 1
 
 ---
 
-# The journey so far (Cont.)
+class: center, middle, title
 
-## 2016 November
-- Monolithic repo into Kubernetes in production
+# 2016
+# Part 2
 
-## 2017 March
-- Going forward
+---
+
+class: center, middle, title
+
+# 2017
+# Part 1
 
 ---
 
 # What is Docker?
 
+<br>
+
 .center[
-![:scale 48%](what-is-vm-diagram.png) ![:scale 48%](what-is-docker-diagram.png)
+  ![:scale 48%](what-is-vm-diagram.png) ![:scale 48%](what-is-docker-diagram.png)
 ]
 
 ---
@@ -214,7 +220,7 @@ class: center, middle
 
 ---
 
-# Running an example app
+# Running an Example App
 
 ![:scale 90%](examples/docker_counter_dashboard.png)
 
@@ -308,6 +314,23 @@ Not a container problem, just a distributed systems one.
 
 ---
 
+class: center, middle, title
+
 # Questions
 
-[zoidbergwill.github.io/presentations/2017/kubernetes-scaleconf/](zoidbergwill.github.io/presentations/2017/kubernetes-scaleconf/)
+<br>
+<br>
+
+[<i class="fa fa-slack" aria-hidden="true"></i> @zoidbergwill on Slack: zatech.co.za](http://zatech.co.za)
+
+[<i class="fa fa-twitter" aria-hidden="true"></i> twitter.com/zoidbergwill](http://twitter.com/zoidbergwill)
+
+[<i class="fa fa-github" aria-hidden="true"></i> github.com/zoidbergwill](http://github.com/zoidbergwill)
+
+<i class="fa fa-pied-piper-pp" aria-hidden="true"></i> `zoidbergwill` basically everywhere
+
+<br>
+<br>
+
+### [zoidbergwill.com/presentations/2017/kubernetes-scaleconf/](http://zoidbergwill.github.io/presentations/2017/kubernetes-scaleconf/)
+
