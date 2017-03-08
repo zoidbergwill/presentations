@@ -27,9 +27,11 @@ class: center
 
 ---
 
-# Who Am I Really
+.center[
+  # Who Am I Really
 
-![:scale 40%](dougs_photo.jpg)
+  ![:scale 40%](pot-plant.jpg)
+]
 
 ### William Stewart
 
@@ -82,6 +84,14 @@ class: center
 .center[
   ![:scale 90%](better-resource-usage.png)
 ]
+
+---
+
+class: center
+
+# Enter Docker
+
+![](phlippy_whale_captain_kube.png)
 
 ---
 
@@ -145,6 +155,14 @@ class: center, middle, title
 
 ---
 
+class: center
+
+# Docker
+
+![](phlippy_and_whale.png)
+
+---
+
 # What is Docker?
 
 <br>
@@ -168,32 +186,17 @@ ADD src .
 
 ---
 
-# Docker build caching
+class: center, middle
 
-## Adding a requirement
+# Kubernetes
 
-```
-FROM python
-*ADD src/requirements.txt .
-*RUN pip install -r requirements.txt --no-cache-dir
-*ADD src .
-```
-
-## Editing source code
-
-```
-FROM python
-ADD src/requirements.txt .
-RUN pip install -r requirements.txt --no-cache-dir
-*ADD src .
-```
+![](phlippy_cloning.png)
 
 ---
 
 class: center, middle
 
 # What is Kubernetes?
-
 
 .center[
   ![:scale 60%](logo_with_border.png)
@@ -242,7 +245,11 @@ class: center, middle
 
 ---
 
-# Dev vs Ops experience
+class: center
+
+# Dev vs. Ops Experience
+
+![](phlippy_ghosts.png)
 
 ---
 
@@ -260,57 +267,77 @@ class: center, middle
 # Deployment evolution
 
 ## sed
-  ```
-  sed "s@image: ${DEPLOYED_IMAGE_URL}@image: ${NEW_IMAGE_URL}@"
-  ```
+
+```
+sed "s@image: ${DEPLOYED_IMAGE_URL}@image: ${NEW_IMAGE_URL}@"
+```
 ## envsubst
-  ```
-  envsubst deployment.yml.template
-  ```
+
+```
+envsubst deployment.yml.template
+```
 
 ## jinja2 (with j2-cli)
 
 ---
 
-# Local dev evolution
+class: center, middle, title
 
-## docker-compose
-
-## hyperkube
-
-## minikube
+# Local Dev
 
 ---
 
-## Ephemeral containers
+class: center, middle, title
+
+# Ephemeral containers
 
 ---
 
-## Build-time secrets
+class: center, middle, title
+
+# Build-time secrets
 
 ---
 
-## Storage volumes
+class: center, middle, title
 
-All the docs are a lie.
-
----
-
-## Migrations
-
-Not a container problem, just a distributed systems one.
+# Storage volumes
 
 ---
 
-## Logging
+class: center, middle, title
+
+# Migrations
 
 ---
 
-## Cron and long running processes
+class: center, middle, title
+
+# Logging
 
 ---
 
-## Signal propagation and init systems
+class: center, title
+
+# Cron
+
+<br>
+<br>
+<br>
+<br>
+
+# Long Running Processes
+
+---
+
+# Init Systems
+
+`CMD "python my_server.py"`
+![](dumb-init-scenario-1.png)
+`CMD ["python", "my_server.py"]`
+![](dumb-init-scenario-2.png)
+`CMD ["dumb-init", "python", "my_server.py"]`
+![](dumb-init-scenario-3.png)
 
 ---
 
