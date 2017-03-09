@@ -21,12 +21,6 @@ class: center
 
 ---
 
-# Who Am I
-
-![:scale 100%](guido-van-rossum.png)
-
----
-
 .center[
   # Who Am I Really
 
@@ -37,7 +31,7 @@ class: center
 
 #### Site Reliability and DevOps Team at Superbalist.com
 
-- Only cried about Docker Inc. ~~6~~ 7 times
+- Only cried about Docker 7 times
 - Plays French Horn and rides a fixie
 - Denies being a hipster
 - Yes, I know DevOps isn't supposed to be a person or a team
@@ -84,74 +78,6 @@ class: center
 .center[
   ![:scale 90%](better-resource-usage.png)
 ]
-
----
-
-class: center
-
-# Enter Docker
-
-![](phlippy_whale_captain_kube.png)
-
----
-
-class: center
-
-# 2016 and Beyond
-
-<br>
-
-## <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i>
-
-<br>
-
-## <i class="fa fa-building" aria-hidden="true"></i> ±15 services
-## <i class="fa fa-server" aria-hidden="true"></i> &lt;20 servers
-## ⎈ 80% into Kubernetes
-
-<br>
-
-## <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i>
-
-
----
-
-class: center, middle
-
-# Black Friday (in the war room)
-
-```
-$ gcloud container clusters resize hive --size="one billion"
-$ kubectl scale deployment/website --replicas 500
-```
-
----
-
-class: center, middle, title
-
-# 2015
-# November
-
----
-
-class: center, middle, title
-
-# 2016
-# Part 1
-
----
-
-class: center, middle, title
-
-# 2016
-# Part 2
-
----
-
-class: center, middle, title
-
-# 2017
-# Part 1
 
 ---
 
@@ -236,20 +162,56 @@ class: center, middle
 
 class: center
 
-# Dev vs. Ops Experience
+# Kubernetes at Superbalist
 
-![](phlippy_ghosts.png)
+![](phlippy_whale_captain_kube.png)
 
 ---
 
-# Tools we use
+class: center
 
-## docker
-## gcloud
-## kubectl
-## Jinja2
-## minikube
-## stern
+# 2016 and Beyond
+
+<br>
+
+## <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+
+<br>
+
+## <i class="fa fa-building" aria-hidden="true"></i> ±15 services
+## <i class="fa fa-server" aria-hidden="true"></i> &lt;20 servers
+## ⎈ 80% into Kubernetes
+
+<br>
+
+## <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i> <i class="fa fa-shopping-basket" aria-hidden="true"></i> <i class="fa fa-shopping-basket superb" aria-hidden="true"></i>
+
+
+---
+
+class: center, middle
+
+# Black Friday (in the war room)
+
+```
+$ gcloud container clusters resize hive --size="one billion"
+$ kubectl scale deployment/website --replicas 500
+```
+
+---
+
+class: center, middle, title
+
+# 2015
+# November
+
+---
+
+class: center
+
+# Dev vs. Ops Experience
+
+![](phlippy_ghosts.png)
 
 ---
 
@@ -272,25 +234,7 @@ envsubst deployment.yml.template
 
 class: center, middle, title
 
-# Local Dev
-
----
-
-class: center, middle, title
-
 # Ephemeral containers
-
----
-
-class: center, middle, title
-
-# Build-time secrets
-
----
-
-class: center, middle, title
-
-# Storage volumes
 
 ---
 
@@ -302,17 +246,44 @@ class: center, middle, title
 
 class: center, middle, title
 
+# 2016
+# Part 1
+
+---
+
+class: center, middle, title
+
+# Local Dev
+
+---
+
+class: center, middle, title
+
+# Storage volumes
+
+---
+
+class: center, middle, title
+
+# 2016
+# Part 2
+
+---
+
+class: center, middle, title
+
 # Logging
 
 ---
 
-class: center, title
+class: center, middle, title
 
 # Cron
 
 <br>
-<br>
-<br>
+
+## and
+
 <br>
 
 # Long Running Processes
@@ -327,6 +298,19 @@ class: center, title
 ![](dumb-init-scenario-2.png)
 `CMD ["dumb-init", "python", "my_server.py"]`
 ![](dumb-init-scenario-3.png)
+
+---
+
+class: center, middle, title
+
+# 2017
+# Part 1
+
+---
+
+class: center, middle, title
+
+# Build-time secrets
 
 ---
 
