@@ -22,7 +22,7 @@ class: center
 ---
 
 .center[
-  # Who Am I Really
+  # Who Am I
 
   ![:scale 40%](pot-plant.jpg)
 ]
