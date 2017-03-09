@@ -210,38 +210,27 @@ class: center, middle
 
 ---
 
-# Kubernetes
-
-- Gives you the primitives to declare:
-  - Apps which do rolling updates controlled by Kubernetes
-  - Loadbalancers that do service discovery and balance load over
-    healthy versions of the apps
-  - Run apps on every single node in your cluster
-
-- Native support for cloud providers, for storage and external
-  IPs.
-
----
-
 # Running an Example App
 
 ![:scale 90%](examples/docker_counter_dashboard.png)
 
 ---
 
-# Kubernetes Primitives: Deployments
+class: center, middle
+
+# Kubernetes Primitives
+
+# Deployments
 
 ![](resource-breakdown.png)
 
 ---
 
-# Kubernetes Primitives: Services
+class: center, middle
 
-## A/B testing
+# Kubernetes Primitives
 
-## Rolling updates
-
-## Canaries
+# Services
 
 ---
 
