@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Python Packaging</title>
+    <meta charset="utf-8">
+    <link rel="icon" href="favicon.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="favicon.png" sizes="48x48" type="image/png">
+    <link rel="icon" href="favicon.png" sizes="62x62" type="image/png">
+    <link rel="icon" href="favicon.png" sizes="192x192" type="image/png">
+    <link rel="stylesheet" href="/presentations/bower_components/font-awesome/css/font-awesome.min.css">
+    <style>
+      body {
+        font-family: 'Lato', sans-serif;
+      }
+      img {
+        max-width: 100%;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Alegreya', serif;
+        font-weight: normal;
+        -webkit-margin-before: 0em;
+        -webkit-margin-after: 0em;
+      }
+      .remark-code, .remark-inline-code {
+        font-family: 'Source Code Pro', monospace;
+      }
+
+      .remark-code {
+        font-size: 20px;
+      }
+
+      @page {
+        size: 1210px 681px;
+        margin: 0;
+      }
+
+      @media print {
+        .remark-slide-scaler {
+          width: 100% !important;
+          height: 100% !important;
+          transform: scale(1) !important;
+          top: 0 !important;
+          left: 0 !important;
+        }
+      }
+
+      .inverted {
+        filter: invert(100%);
+      }
+
+      .superb {
+        color: #3cd062;
+      }
+
+      .title h1 {
+        font-size: 92px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="/presentations/bower_components/remark/out/remark.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+    <!--<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>-->
+    <script>
+      WebFont.load({
+        google: {
+          families: ['Alegreya', 'Lato', 'Source Code Pro']
+        }
+      });
+
+      var slideshow = remark.create(
+        {
+          ratio: '4:3',
+          sourceUrl: 'index.md',
+          // slideNumberFormat: 'Slide %current% / %total%',
+          highlightStyle: 'tomorrow',
+          highlightLanguage: "default",
+          highlightLines: true
+        }
+      );
+
+      remark.macros.scale = function (percentage) {
+        var url = this;
+        return '<img src="' + url + '" style="width: ' + percentage + '" />';
+      };
+    </script>
+  </body>
+</html>
