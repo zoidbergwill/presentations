@@ -179,7 +179,7 @@ MANIFEST.in
 
 layout: true
 
-# Alternatives
+# Alternatives to Pipfile
 
 ---
 
@@ -193,17 +193,36 @@ layout: true
 
 ```bash
 rm requirements.txt
-virtualenv/bin/pip install -r requirements-to-freeze.txt --upgrade
+virtualenv/bin/pip install \
+  -r requirements-to-freeze.txt \
+  --upgrade
 virtualenv/bin/pip freeze > requirements.txt
 ```
 
 ```bash
+$ cat requirements-to-freeze.txt
 django
 ```
 
 ```bash
+$ cat requirements.txt
 Django==1.11
 pytz==2017.2
 ```
 
 https://www.kennethreitz.org/essays/a-better-pip-workflow
+
+---
+
+# Links
+
+https://hynek.me/articles/sharing-your-labor-of-love-pypi-quick-and-dirty/
+https://hynek.me/articles/conditional-python-dependencies/
+
+https://packaging.python.org/current/
+
+https://www.python.org/dev/peps/pep-0376/
+https://www.python.org/dev/peps/pep-0426/
+https://www.python.org/dev/peps/pep-0427/
+https://www.python.org/dev/peps/pep-0491/
+
