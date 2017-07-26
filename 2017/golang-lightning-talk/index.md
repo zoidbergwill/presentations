@@ -122,6 +122,94 @@ class: title
 - Data processing / machine learning
 
 ---
+class: title
+
+# Some actual code
+
+---
+# Errors
+
+```go
+if err != nil {
+    return "", err
+}
+return result, nil
+```
+
+or
+
+```go
+if err != nil {
+    log.Print(err)
+}
+return result
+```
+
+---
+
+# Case statements
+
+```go
+switch node.Data {
+case "a", "link":
+    foundURL = getKeyFromNode(node, "href")
+case "img", "script":
+    foundURL = getKeyFromNode(node, "src")
+case "form":
+    foundURL = getKeyFromNode(node, "action")
+}
+```
+
+---
+
+# Merging arrays
+
+```
+urls = append(urls, getURLsFromDOM(c)...)
+```
+
+---
+# Goroutines
+
+Synchronous function:
+
+```go
+sleep(1000)
+```
+
+Asynchronous version:
+```go
+go sleep(1000)
+```
+---
+
+# Simple syncing
+
+```go
+wg := &sync.WaitGroup()
+wg.Add(1)
+go func() {
+    defer wg.Done()
+    sleep(1000000)
+}
+wg.Wait()
+```
+
+---
+# Channels
+
+Magic, sort of...
+
+```go
+select {
+msg := <- chan1:
+    fmt.Println(msg)
+<- doneChannel:
+    return
+}
+```
+
+---
 class: center, title
 
 ## Fin.
